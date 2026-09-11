@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#a8412f">
+  <title>罗马 3 天 2 夜旅行手册</title>
+  <style>
+    :root { --ink:#2e261f; --muted:#766d64; --paper:#fbf7f1; --sand:#efe2d1; --line:#e5d8ca; --red:#a8412f; --wine:#6c2d22; --green:#4d7565; --shadow:0 18px 48px rgba(62,35,19,.12); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:"Noto Sans SC","Microsoft YaHei",Arial,sans-serif; line-height:1.6; }
+    button, a { font:inherit; }
+    a { color:inherit; }
+    .shell { width:min(1440px,100%); min-height:100vh; margin:auto; display:grid; grid-template-columns:minmax(0,1fr) 272px; }
+    main { min-width:0; grid-column:1; }
+    .sidebar { grid-column:2; position:sticky; top:0; height:100vh; padding:30px 22px; background:#30261f; color:#f9f1e8; display:flex; flex-direction:column; gap:28px; }
+    .brand { display:flex; gap:12px; align-items:center; letter-spacing:.02em; }
+    .brand-mark { display:grid; place-items:center; width:38px; height:38px; border:1px solid rgba(255,255,255,.4); border-radius:50%; font-family:Georgia,serif; font-size:20px; }
+    .brand small { display:block; opacity:.62; font-size:11px; letter-spacing:.16em; text-transform:uppercase; }
+    .nav { display:grid; gap:5px; }
+    .nav button { width:100%; border:0; border-left:2px solid transparent; background:transparent; color:rgba(249,241,232,.65); text-align:left; padding:11px 10px; cursor:pointer; transition:.2s; }
+    .nav button:hover, .nav button[aria-selected="true"] { color:#fff; border-left-color:#e8b17b; background:rgba(255,255,255,.08); }
+    .side-note { margin-top:auto; border-top:1px solid rgba(255,255,255,.18); padding-top:17px; color:rgba(249,241,232,.62); font-size:12px; }
+    .mobile-bar { display:none; }
+    .panel { display:none; padding:48px clamp(20px,5vw,76px) 72px; max-width:1130px; margin:auto; }
+    .panel.active { display:block; animation:appear .3s ease; }
+    @keyframes appear { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:none; } }
+    .eyebrow { color:var(--red); font-size:12px; letter-spacing:.16em; font-weight:700; text-transform:uppercase; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { margin:10px 0 16px; font:clamp(42px,6vw,74px)/.98 Georgia,"Noto Serif SC",serif; letter-spacing:-.045em; }
+    h2 { margin:8px 0 10px; font:clamp(29px,4vw,42px)/1.1 Georgia,"Noto Serif SC",serif; letter-spacing:-.03em; }
+    h3 { margin-bottom:8px; font-size:17px; }
+    .lead { color:var(--muted); font-size:17px; max-width:56ch; }
+    .hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(280px,.85fr); gap:clamp(28px,5vw,68px); align-items:center; min-height:610px; }
+    .hero-image { min-height:440px; border-radius:160px 160px 12px 12px; overflow:hidden; position:relative; box-shadow:var(--shadow); background:#d6b496; }
+    .hero-image img { width:100%; height:100%; position:absolute; object-fit:cover; filter:saturate(.8) contrast(.95); }
+    .hero-image::after { content:"ROMA"; position:absolute; right:19px; bottom:10px; color:#fff; font:60px/.8 Georgia,serif; letter-spacing:.12em; text-shadow:0 2px 12px rgba(0,0,0,.35); writing-mode:vertical-rl; }
+    .trip-meta { display:flex; flex-wrap:wrap; gap:8px; margin:24px 0; }
+    .pill, .status { display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:5px 10px; font-size:12px; font-weight:700; }
+    .pill { background:var(--sand); color:#6d4c35; }
+    .status.recommend { background:#f6e7bf; color:#875e11; }
+    .status.pending { background:#ece8e2; color:#655f58; }
+    .status.selected { background:#dceade; color:#35624c; }
+    .status.booked { background:#dce7f4; color:#365a82; }
+    .notice { border-left:3px solid var(--red); background:#f6eee6; padding:14px 16px; color:#66584c; font-size:13px; }
+    .summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:28px; }
+    .summary-grid div { padding:15px; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.52); }
+    .summary-grid span { display:block; font-size:12px; color:var(--muted); }
+    .summary-grid strong { display:block; margin-top:3px; font-size:15px; }
+    .section-top { display:flex; align-items:end; justify-content:space-between; gap:18px; margin-bottom:30px; }
+    .merged-divider { border-top:1px solid var(--line); margin:56px 0; }
+    .section-top .lead { margin:0; font-size:15px; }
+    .day-tabs, .subtabs { display:flex; gap:8px; flex-wrap:wrap; }
+    .day-tabs { margin:0 0 24px; }
+    .day-tabs button, .subtabs button { border:1px solid var(--line); padding:8px 13px; border-radius:999px; background:transparent; color:var(--muted); cursor:pointer; }
+    .day-tabs button.active, .subtabs button.active { color:#fff; border-color:var(--wine); background:var(--wine); }
+    .day-content { display:none; }
+    .day-content.active { display:block; }
+    .route { position:relative; padding:20px 18px; margin:0 0 24px; border:1px dashed #cdb6a1; background:#fffaf4; border-radius:14px; overflow:hidden; }
+    .route::before { content:""; position:absolute; height:1px; width:100%; left:0; top:51%; border-top:2px dashed #be8d67; transform:rotate(-3deg); }
+    .route-label { position:relative; z-index:1; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .route-label span { border-radius:100%; width:30px; height:30px; display:grid; place-items:center; color:#fff; background:var(--red); font-weight:700; font-size:12px; }
+    .route-label em { background:#fffaf4; padding:0 7px; font-style:normal; font-size:13px; }
+    .timeline { border-left:1px solid #d8bca4; margin-left:14px; padding-left:31px; }
+    .stop { position:relative; padding:0 0 25px; }
+    .stop::before { content:""; position:absolute; width:11px; height:11px; border-radius:50%; left:-37px; top:7px; background:var(--red); box-shadow:0 0 0 5px var(--paper); }
+    .stop-time { color:var(--red); font-size:13px; font-weight:800; letter-spacing:.04em; }
+    .stop-head { display:flex; justify-content:space-between; align-items:start; gap:16px; }
+    .stop p { color:var(--muted); font-size:14px; margin:5px 0 10px; }
+    .link-row { display:flex; gap:8px; flex-wrap:wrap; }
+    .link-row.action-grid-2x2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .link-row.action-grid-2x2 .action { text-align:center; }
+    .action { border:1px solid var(--line); border-radius:8px; padding:6px 10px; color:#604836; font-size:12px; text-decoration:none; background:#fff; }
+    .action:hover { border-color:var(--red); color:var(--red); }
+    .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .cards.three { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .group-title { display:flex; align-items:center; gap:10px; margin:26px 0 13px; font-size:14px; font-weight:800; }
+    .group-title::after { content:""; height:1px; flex:1; background:var(--line); }
+    .card { position:relative; padding:20px; border:1px solid var(--line); border-radius:14px; background:#fffdf9; }
+    .card p { color:var(--muted); font-size:14px; margin-bottom:12px; }
+    .card .status { position:absolute; top:15px; right:15px; }
+    .fact { font-size:13px; padding-top:9px; border-top:1px solid #eee4d9; color:#675b50; }
+    .fact + .fact { border-top:0; padding-top:4px; }
+    .two-col { display:grid; grid-template-columns:1.15fr .85fr; gap:30px; }
+    .note-list { list-style:none; padding:0; margin:0; display:grid; gap:11px; }
+    .note-list li { padding:12px 14px; background:#fffdf9; border:1px solid var(--line); border-radius:10px; font-size:14px; }
+    .note-list b { color:var(--red); }
+    .placeholder { border:1px dashed #cdb6a1; border-radius:14px; padding:22px; background:#fffaf4; color:#75665a; }
+    .placeholder h3 { color:var(--ink); }
+    .check-progress { height:9px; border-radius:99px; background:#e9ded2; overflow:hidden; margin:13px 0 25px; }
+    .check-progress span { display:block; height:100%; background:var(--green); transition:.2s; }
+    .check-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .check-category { grid-column:1 / -1; margin-top:12px; padding-bottom:8px; border-bottom:1px solid var(--line); color:var(--ink); font-size:14px; font-weight:800; }
+    .check-category:first-child { margin-top:0; }
+    .check-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; align-items:center; }
+    .check-actions select { min-height:31px; border:1px solid var(--line); border-radius:8px; padding:5px 8px; background:#fff; color:#604836; font:inherit; font-size:12px; }
+    label.check { display:flex; gap:11px; align-items:flex-start; padding:15px; background:#fffdf9; border:1px solid var(--line); border-radius:11px; cursor:pointer; }
+    label.check input { margin:5px 0 0; accent-color:var(--green); width:16px; height:16px; }
+    label.check small { display:block; color:var(--muted); margin-top:2px; }
+    details { border-bottom:1px solid var(--line); padding:14px 0; }
+    summary { cursor:pointer; font-weight:800; list-style:none; }
+    summary::after { content:"+"; float:right; color:var(--red); font-size:20px; line-height:1; }
+    details[open] summary::after { content:"−"; }
+    details p, details ul { color:var(--muted); font-size:14px; margin:10px 0 2px; }
+    .reservation { display:flex; align-items:start; gap:14px; padding:17px 0; border-bottom:1px solid var(--line); }
+    .reservation-icon { flex:0 0 37px; width:37px; height:37px; border-radius:50%; display:grid; place-items:center; background:var(--sand); color:var(--wine); font-weight:800; }
+    .reservation p { margin:3px 0 0; color:var(--muted); font-size:13px; }
+    .reservation .status { margin-left:auto; white-space:nowrap; }
+    .footer { margin-top:48px; text-align:center; color:var(--muted); font-size:13px; }
+    @media (max-width:760px) {
+      body { background:#fbf7f1; }
+      .shell { display:block; }
+      .sidebar { position:fixed; z-index:20; inset:0 auto 0 0; width:min(82vw,310px); height:100dvh; transform:translateX(-101%); transition:.25s; box-shadow:10px 0 30px rgba(0,0,0,.18); }
+      body.menu-open .sidebar { transform:translateX(0); }
+      .mobile-bar { display:flex; position:sticky; z-index:10; top:0; align-items:center; justify-content:space-between; padding:13px 18px; background:rgba(251,247,241,.95); border-bottom:1px solid var(--line); backdrop-filter:blur(12px); }
+      .mobile-bar strong { font-family:Georgia,serif; }
+      .menu-btn { border:1px solid var(--line); background:#fff; padding:7px 10px; border-radius:8px; cursor:pointer; }
+      .panel { padding:28px 20px 54px; }
+      .hero { grid-template-columns:1fr; min-height:0; }
+      .hero-image { order:-1; min-height:280px; border-radius:110px 110px 10px 10px; }
+      .hero-image::after { font-size:42px; }
+      h1 { font-size:49px; }
+      .summary-grid, .cards, .cards.three, .two-col, .check-grid { grid-template-columns:1fr; }
+      .cards.food-cards { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+      .food-cards .card { padding:14px; }
+      .food-cards .card h3 { font-size:16px; padding-right:0; }
+      .food-cards .card p, .food-cards .fact { font-size:12px; }
+      .food-cards .card .status { position:static; margin-bottom:10px; }
+      .food-cards .action { padding:5px 7px; font-size:11px; }
+      .section-top { display:block; }
+      .section-top .lead { margin-top:9px; }
+      .reservation { align-items:flex-start; }
+      .reservation .status { margin-left:0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-bar"><button class="menu-btn" id="menuButton" aria-label="打开目录">☰ 目录</button><strong>ROMA · 旅行手册</strong></div>
+  <div class="shell">
+    <main>
+      <section class="panel active" id="home" aria-label="首页">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">Italia · Roma</div>
+            <h1>罗马<br>3 天 2 夜</h1>
+            <p class="lead">在斗兽场的残柱与特雷维的水光之间，把每一个清晨都许成愿望。</p>
+            <div class="trip-meta"><span class="pill">2 人出行</span><span class="pill">16.09.2026–18.09.2026</span><span class="pill">中等节奏</span><span class="pill">总预算 €1000</span></div>
+            <div class="notice">⚠️ 本手册根据现有攻略整理。景点介绍、交通、价格与营业信息仅供参考，出行前请以官网、预订平台或现场信息为准；未写明的订单均标为“待确认”。</div>
+            <div class="summary-grid"><div><span>旅行主题</span><strong>历史文化 + 拍照打卡</strong></div><div><span>住宿区域</span><strong>Hotel Artemide · Termini</strong><button class="action" style="margin-top:10px" data-go="stay" data-sub-target="stay-list">查看住宿</button></div><div><span>优先预约</span><strong>斗兽场 · 梵蒂冈 · 万神殿</strong><button class="action" style="margin-top:10px" data-go="checklist">查看检查清单</button></div></div>
+          </div>
+          <div class="hero-image"><img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1100&q=82" alt="罗马斗兽场"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="itinerary" aria-label="行程">        <div class="section-top"><div><div class="eyebrow">Itinerary</div><h2>三天，按新的节奏走罗马</h2></div><p class="lead">抵达日先走老城；第二天集中古罗马；第三天梵蒂冈后前往机场。</p></div>
+        <div class="day-tabs" role="tablist"><button class="active" data-day="1">Day 1 · 抵达与老城</button><button data-day="2">Day 2 · 古罗马全日</button><button data-day="3">Day 3 · 梵蒂冈返程</button></div>
+        <div class="day-content active" data-content="1"><div class="route"><div class="route-label"><span>1</span><em>FCO</em><span>2</span><em>Hotel Artemide</em><span>3</span><em>特雷维</em><span>4</span><em>万神殿</em><span>5</span><em>纳沃纳</em><span>6</span><em>Da Enzo</em><span>7</span><em>Hotel</em></div></div><div class="timeline"><article class="stop"><div class="stop-time">13:00–14:20</div><div class="stop-head"><h3>FCO → Termini</h3><span class="status pending">车票待确认</span></div><p>出关取行李、准备 SIM/eSIM 后，乘 Leonardo Express 前往 Roma Termini。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Fiumicino+Airport&destination=Roma+Termini" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="checklist">查看火车票</button></div></article><article class="stop"><div class="stop-time">14:20–15:00</div><div class="stop-head"><h3>入住 Hotel Artemide</h3><span class="status selected">已选</span></div><p>Termini 步行约 8 分钟，放行李并稍作休整。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Roma+Termini&destination=Hotel+Artemide+Rome" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="stay" data-sub-target="stay-list">查看酒店</button></div></article><article class="stop"><div class="stop-time">15:00–19:00</div><div class="stop-head"><h3>特雷维喷泉 → 万神殿 → 纳沃纳广场</h3></div><p>依次完成老城拍照线；万神殿后可到 Giolitti 吃冰淇淋，纳沃纳广场周边可购买陶瓷、马赛克、明信片与巧克力礼盒。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Hotel+Artemide+Rome&destination=Piazza+Navona&waypoints=Trevi+Fountain%7CPantheon" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="sights" data-sub-target="sight-list">查看景点</button><a class="action" href="https://www.google.com/maps/search/?api=1&query=Piazza+Navona+Rome" target="_blank" rel="noreferrer">购物导航</a><a class="action" href="https://www.google.com/maps/search/?api=1&query=Giolitti+Rome" target="_blank" rel="noreferrer">小吃导航</a></div></article><article class="stop"><div class="stop-time">19:00–21:00</div><div class="stop-head"><h3>Da Enzo al 29 晚餐</h3><span class="status selected">已选</span></div><p>特拉斯特维莱手工意面与炖牛尾；建议尽早完成预订。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Piazza+Navona&destination=Da+Enzo+al+29+Rome" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="stay" data-sub-target="food-list">查看餐厅</button></div></article><article class="stop"><div class="stop-time">21:00 后</div><div class="stop-head"><h3>Da Enzo al 29 → Hotel Artemide</h3></div><p>晚餐后返回酒店休息，为 Day 2 古罗马全日保留体力。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Da+Enzo+al+29+Rome&destination=Hotel+Artemide+Rome" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="stay" data-sub-target="stay-list">查看酒店</button></div></article></div></div>
+        <div class="day-content" data-content="2"><div class="route"><div class="route-label"><span>1</span><em>斗兽场</em><span>2</span><em>罗马广场</em><span>3</span><em>Hostaria</em><span>4</span><em>卡比托利欧</em><span>5</span><em>西班牙台阶</em><span>6</span><em>Osteria</em><span>7</span><em>Hotel</em></div></div><div class="timeline"><article class="stop"><div class="stop-time">08:30–12:30</div><div class="stop-head"><h3>斗兽场 → 罗马广场 → 帕拉蒂尼山</h3><span class="status pending">门票待确认</span></div><p>建议 9:00 前入场；按联票顺序完成古罗马核心遗迹。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Hotel+Artemide+Rome&destination=Palatine+Hill&waypoints=Colosseum%7CRoman+Forum" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="sights" data-sub-target="sight-list">查看景点</button></div></article><article class="stop"><div class="stop-time">12:30–14:00</div><div class="stop-head"><h3>Hostaria da Nerone 午餐</h3><span class="status selected">已选</span></div><p>斗兽场附近的罗马炖菜与烤肉。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Roman+Forum&destination=Hostaria+da+Nerone+Rome" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="stay" data-sub-target="food-list">查看餐厅</button></div></article><article class="stop"><div class="stop-time">14:00–18:00</div><div class="stop-head"><h3>卡比托利欧博物馆 / 帝国广场大道 → 威尼斯广场 → 西班牙台阶</h3></div><p>保留中等节奏的拍照与步行留白；博物馆与大道二选一。西班牙台阶后沿 Via del Corso / Via dei Condotti 逛皮革与时装店，并可顺路买 Pompi 提拉米苏。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Hostaria+da+Nerone+Rome&destination=Spanish+Steps&waypoints=Capitoline+Museums%7CPiazza+Venezia" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="sights" data-sub-target="sight-list">查看景点</button><a class="action" href="https://www.google.com/maps/search/?api=1&query=Via+del+Corso+Rome" target="_blank" rel="noreferrer">购物导航</a><a class="action" href="https://www.google.com/maps/search/?api=1&query=Pompi+Via+della+Croce+8+Rome" target="_blank" rel="noreferrer">小吃导航</a></div></article><article class="stop"><div class="stop-time">18:30–21:00</div><div class="stop-head"><h3>Osteria der Belli 晚餐</h3><span class="status selected">已选</span></div><p>特拉斯特维莱圣玛丽亚教堂旁；晚餐后返回 Hotel Artemide。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Spanish+Steps&destination=Osteria+der+Belli+Rome" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="stay" data-sub-target="food-list">查看餐厅</button></div></article><article class="stop"><div class="stop-time">21:00 后</div><div class="stop-head"><h3>Osteria der Belli → Hotel Artemide</h3></div><p>晚餐后乘地铁或按 Google 路线返回酒店休息。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Osteria+der+Belli+Rome&destination=Hotel+Artemide+Rome" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="stay" data-sub-target="stay-list">查看酒店</button></div></article></div></div>
+        <div class="day-content" data-content="3"><div class="route"><div class="route-label"><span>1</span><em>梵蒂冈</em><span>2</span><em>圣彼得</em><span>3</span><em>Bonci</em><span>4</span><em>圣天使 / 博尔盖塞</em><span>5</span><em>Hotel</em><span>6</span><em>FCO</em></div></div><div class="timeline"><article class="stop"><div class="stop-time">08:00–13:00</div><div class="stop-head"><h3>梵蒂冈博物馆 → 圣彼得大教堂与穹顶</h3><span class="status pending">门票待确认</span></div><p>地铁 A 线至 Ottaviano；梵蒂冈博物馆建议预约 9:00 早场。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Hotel+Artemide+Rome&destination=St+Peter%27s+Basilica&waypoints=Vatican+Museums" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="sights" data-sub-target="sight-list">查看景点</button></div></article><article class="stop"><div class="stop-time">13:00–14:30</div><div class="stop-head"><h3>Bonci Pizzarium 午餐</h3><span class="status selected">已选</span></div><p>Prati 区创意薄脆披萨，按重量购买。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=St+Peter%27s+Basilica&destination=Bonci+Pizzarium+Rome" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="stay" data-sub-target="food-list">查看餐厅</button></div></article><article class="stop"><div class="stop-time">14:30–16:00</div><div class="stop-head"><h3>圣天使城堡 / 博尔盖塞美术馆</h3></div><p>二选一；若选博尔盖塞美术馆，需提前确认预约。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Bonci+Pizzarium+Rome&destination=Castel+Sant%27Angelo" target="_blank" rel="noreferrer">路线 1 · 圣天使城堡</a><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Bonci+Pizzarium+Rome&destination=Galleria+Borghese" target="_blank" rel="noreferrer">路线 2 · 博尔盖塞美术馆</a><button class="action" data-go="sights" data-sub-target="sight-list">查看景点</button></div><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Castel+Sant%27Angelo" target="_blank" rel="noreferrer">Google Maps · 圣天使</a><a class="action" href="https://www.google.com/maps/search/?api=1&query=Galleria+Borghese" target="_blank" rel="noreferrer">Google Maps · 博尔盖塞</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Castel%20Sant%20Angelo%20Galleria%20Borghese%20Rome" target="_blank" rel="noreferrer">小红书搜索</a><button class="action" data-go="checklist">查看检查清单</button></div></article><article class="stop"><div class="stop-time">16:00 起</div><div class="stop-head"><h3>取行李 → Leonardo Express → FCO</h3><span class="status pending">车票待确认</span></div><p>回酒店取行李前后，可在 Termini 地下超市 / Carrefour 补购咖啡豆、意面、饼干和巧克力；随后前往机场并预留充足值机时间。</p><div class="link-row"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Hotel+Artemide+Rome&destination=Fiumicino+Airport" target="_blank" rel="noreferrer">Google 路线</a><button class="action" data-go="checklist">查看火车票</button></div></article></div></div></section>
+
+      <section class="panel" id="stay" aria-label="住宿和美食">        <div class="section-top"><div><div class="eyebrow">Stay Food & Snacks</div><h2>已锁定的住宿与餐饮</h2></div><p class="lead">Hotel Artemide 与四家餐厅为新规划中的“已选”；是否完成订单仍以你的实际预订为准。</p></div>
+        <div class="subtabs"><button class="active" data-sub="stay-list">住宿</button><button data-sub="food-list">餐厅</button><button data-sub="snack-list">小吃</button></div>
+        <div class="subcontent active" data-subcontent="stay-list"><div class="group-title">已选住宿</div><div class="cards"><article class="card"><span class="status selected">已选</span><h3>Hotel Artemide</h3><p>Via Nazionale，距 Termini 步行约 8 分钟；四星、含早、安静。</p><div class="fact">入住：16.09.2026 · 退房：18.09.2026</div><div class="fact">参考价：€150–180 / 晚</div><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Hotel+Artemide+Rome" target="_blank" rel="noreferrer">Google Maps</a><button class="action" data-go="checklist">查看检查清单</button></div></article></div><div class="notice" style="margin-top:20px">Hotel Artemide 已选。下单后可在“检查清单 / 旅行预订”补充订单摘要与确认号。</div></div>
+        <div class="subcontent" data-subcontent="food-list" style="display:none"><div class="group-title">Day 1 · 特拉斯特维莱</div><div class="cards food-cards"><article class="card"><span class="status selected">晚餐已选</span><h3>Da Enzo al 29</h3><p>手工意面、炖牛尾；当天无另外安排午餐。</p><div class="fact">人均：€28–35</div><div class="fact">提示：建议提前预订</div><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Da+Enzo+al+29+Rome" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Da%20Enzo%20al%2029%20Rome" target="_blank" rel="noreferrer">小红书搜索</a><button class="action" data-go="checklist">查看检查清单</button></div></article><article class="card"><span class="status recommend">备选</span><h3>Trattoria da Teo</h3><p>炸洋蓟、海鲜面；满座时替补。</p><div class="fact">人均：€25–32</div><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Trattoria+da+Teo+Rome" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Trattoria%20da%20Teo%20Rome" target="_blank" rel="noreferrer">小红书搜索</a><button class="action" data-go="checklist">查看检查清单</button></div></article></div><div class="group-title">Day 2 · 斗兽场 / 特拉斯特维莱</div><div class="cards food-cards"><article class="card"><span class="status selected">午餐已选</span><h3>Hostaria da Nerone</h3><p>罗马炖菜、烤肉，近斗兽场。</p><div class="fact">人均：€18–24</div><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Hostaria+da+Nerone+Rome" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Hostaria%20da%20Nerone%20Rome" target="_blank" rel="noreferrer">小红书搜索</a><button class="action" data-go="checklist">查看检查清单</button></div></article><article class="card"><span class="status selected">晚餐已选</span><h3>Osteria der Belli</h3><p>海鲜、Saltimbocca，靠近圣玛丽亚教堂。</p><div class="fact">人均：€28–35</div><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Osteria+der+Belli+Rome" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Osteria%20der%20Belli%20Rome" target="_blank" rel="noreferrer">小红书搜索</a><button class="action" data-go="checklist">查看检查清单</button></div></article></div><div class="group-title">Day 3 · Prati / 机场</div><div class="cards food-cards"><article class="card"><span class="status selected">午餐已选</span><h3>Bonci Pizzarium</h3><p>创意薄脆披萨，梵蒂冈步行约 10 分钟。</p><div class="fact">人均：€10–15</div><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Bonci+Pizzarium+Rome" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Bonci%20Pizzarium%20Rome" target="_blank" rel="noreferrer">小红书搜索</a><button class="action" data-go="checklist">查看检查清单</button></div></article><article class="card"><span class="status pending">待确认</span><h3>机场轻食</h3><p>按航班时间在 FCO 或途中安排。</p><div class="fact">人均：€10–20</div></article></div></div>
+                <div class="subcontent" data-subcontent="snack-list" style="display:none"><div class="group-title">罗马甜品小吃打卡</div><div class="cards food-cards"><article class="card"><span class="status recommend">Day 1 顺路</span><h3>Giolitti</h3><p>万神殿附近百年冰淇淋店；适合 Day 1 16:30–17:30 的老城步行段。</p><div class="fact">地址：Via degli Uffici del Vicario 40</div><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Giolitti+Rome" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Giolitti%20Rome" target="_blank" rel="noreferrer">小红书搜索</a></div></article><article class="card"><span class="status recommend">Day 2 顺路</span><h3>Pompi Il Tempio del Tiramisù</h3><p>西班牙台阶旁的外带提拉米苏；经典、开心果与莓果口味可选。</p><div class="fact">地址：Via della Croce 8</div><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Pompi+Via+della+Croce+8+Rome" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Pompi%20Tiramisu%20Rome" target="_blank" rel="noreferrer">小红书搜索</a></div></article></div></div></section>
+
+      <section class="panel" id="sights" aria-label="景点购物和当地体验">        <div class="section-top"><div><div class="eyebrow">Sights Shopping & Experiences</div><h2>景点、体验与购物留白</h2></div><p class="lead">按新行程归类；已锁定项目仍需以门票与预约的实际状态为准。</p></div>
+        <div class="subtabs"><button class="active" data-sub="sight-list">景点</button><button data-sub="shopping-list">购物</button><button data-sub="experience-list">当地体验</button></div>
+        <div class="subcontent active" data-subcontent="sight-list"><div class="group-title">Day 1 · 老城</div><div class="cards"><article class="card"><h3>特雷维喷泉</h3><p>抵达日第一站；适合投币许愿与拍照。</p><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Trevi+Fountain" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Trevi%20Fountain%20Rome" target="_blank" rel="noreferrer">小红书搜索</a></div></article><article class="card"><span class="status pending">预约待确认</span><h3>万神殿</h3><p>步行约 10 分钟；按官方规则确认门票和时段。</p><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Pantheon+Rome" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Pantheon%20Rome" target="_blank" rel="noreferrer">小红书搜索</a><button class="action" data-go="checklist">查看检查清单</button></div></article><article class="card"><h3>纳沃纳广场</h3><p>巴洛克喷泉与街头艺人；傍晚光线适合拍照。</p><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Piazza+Navona+Rome" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Piazza%20Navona%20Rome" target="_blank" rel="noreferrer">小红书搜索</a></div></article></div><div class="group-title">Day 2 · 古罗马</div><div class="cards"><article class="card"><span class="status pending">门票待确认</span><h3>斗兽场 + 罗马广场 + 帕拉蒂尼山</h3><p>建议 9:00 前入场，联票一次完成。</p><a class="action" href="https://ticketing.colosseo.it/en/" target="_blank" rel="noreferrer">官方订票</a><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Colosseum&destination=Palatine+Hill&waypoints=Roman+Forum" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Colosseum%20Roman%20Forum%20Palatine%20Rome" target="_blank" rel="noreferrer">小红书搜索</a><button class="action" data-go="checklist">查看检查清单</button></div></article><article class="card"><h3>卡比托利欧博物馆 / 帝国广场大道</h3><p>下午二选一，给拍照和步行保留空间。</p><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Capitoline+Museums" target="_blank" rel="noreferrer">Google Maps · 博物馆</a><a class="action" href="https://www.google.com/maps/search/?api=1&query=Via+dei+Fori+Imperiali+Rome" target="_blank" rel="noreferrer">Google Maps · 帝国广场</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Capitoline%20Museums%20Rome" target="_blank" rel="noreferrer">小红书搜索</a></div></article><article class="card"><h3>威尼斯广场 + 西班牙台阶</h3><p>傍晚衔接，西班牙台阶看夕阳人潮。</p><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/dir/?api=1&origin=Piazza+Venezia&destination=Spanish+Steps" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Piazza%20Venezia%20Spanish%20Steps%20Rome" target="_blank" rel="noreferrer">小红书搜索</a></div></article></div><div class="group-title">Day 3 · 梵蒂冈与备选</div><div class="cards"><article class="card"><span class="status pending">门票待确认</span><h3>梵蒂冈博物馆 + 西斯廷礼拜堂</h3><p>建议预约 9:00 早场。</p><a class="action" href="https://tickets.museivaticani.va/home" target="_blank" rel="noreferrer">官方订票</a><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Vatican+Museums" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Vatican%20Museums%20Sistine%20Chapel" target="_blank" rel="noreferrer">小红书搜索</a><button class="action" data-go="checklist">查看检查清单</button></div></article><article class="card"><h3>圣彼得大教堂 + 穹顶</h3><p>入堂免费；登顶安排以现场规则为准。</p><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=St+Peter%27s+Basilica" target="_blank" rel="noreferrer">Google Maps</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=St%20Peters%20Basilica%20Rome" target="_blank" rel="noreferrer">小红书搜索</a><button class="action" data-go="checklist">查看检查清单</button></div></article><article class="card"><span class="status pending">二选一</span><h3>圣天使城堡 / 博尔盖塞美术馆</h3><p>城堡桥适合拍照；博尔盖塞需提前预约。</p></article></div></div>
+                <div class="subcontent" data-subcontent="shopping-list" style="display:none"><div class="group-title">结合行程的购物清单</div><div class="cards"><article class="card"><span class="status recommend">Day 1 顺路</span><h3>纳沃纳广场 / 万神殿周边小店</h3><p>陶瓷、马赛克摆件、明信片、冰箱贴；万神殿附近可找 Moriondo & Gariglio 巧克力礼盒。</p><div class="fact">时间：纳沃纳广场傍晚步行段</div><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Moriondo+Gariglio+Rome" target="_blank" rel="noreferrer">Google Maps</a></div></article><article class="card"><span class="status recommend">Day 2 顺路</span><h3>Via del Corso / Via dei Condotti</h3><p>皮革、时装与品牌店；适合挑选 Made in Italy 皮具伴手礼。</p><div class="fact">时间：西班牙台阶后的 16:00–18:00</div><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Via+del+Corso+Rome" target="_blank" rel="noreferrer">Google Maps</a></div></article><article class="card"><span class="status recommend">Day 3 顺路</span><h3>梵蒂冈 / 圣彼得周边店铺</h3><p>玫瑰经、十字架与梵蒂冈纪念章等宗教文创。</p><div class="fact">时间：圣彼得大教堂后</div></article><article class="card"><span class="status recommend">Day 3 最后采购</span><h3>Termini 地下超市 / Carrefour</h3><p>咖啡豆、意面、饼干、巧克力等食品伴手礼；适合取行李前集中补货。</p><div class="fact">预算：杂项 €130 中统筹</div><div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=Carrefour+Express+Roma+Termini" target="_blank" rel="noreferrer">Google Maps</a></div></article></div><div class="notice" style="margin-top:20px">液态橄榄油建议托运；肉类和奶酪入境规则请自行确认。非欧盟居民 Tax Free 的门槛与流程也应以商店当日说明为准。</div></div><div class="subcontent" data-subcontent="experience-list" style="display:none"><div class="cards" style="margin-top:22px"><article class="card"><span class="status recommend">免费体验</span><h3>特拉斯特维莱蓝调时刻</h3><p>Day 1 或 Day 2 晚餐前后拍照；日落后约 30 分钟光线佳。</p></article><article class="card"><span class="status pending">备选体验</span><h3>博尔盖塞美术馆</h3><p>Day 3 与圣天使城堡二选一；需先确认预约。</p></article></div></div></section>
+
+      
+
+      <section class="panel" id="checklist" aria-label="检查清单和旅行预订">        <div class="section-top"><div><div class="eyebrow">Checklist & Bookings</div><h2>出发前确认，订单统一放这里</h2></div><p class="lead">勾选状态仅保存于当前浏览器；“已选”不等于订单已完成。</p></div>
+        <div id="checkText">已完成 0 / 10 项</div><div class="check-progress"><span id="checkBar"></span></div><div class="check-grid" id="checkGrid"><label class="check"><input type="checkbox" data-check="fco"><span><b>FCO 航班与 Leonardo Express</b><small>确认抵达、返程和机场快线时间</small></span></label><label class="check"><input type="checkbox" data-check="hotel"><span><b>Hotel Artemide 订单</b><small>确认入住、取消政策与订单摘要</small></span></label><label class="check"><input type="checkbox" data-check="colosseum"><span><b>斗兽场联票</b><small>确认 Day 2 9:00 左右的入场时段</small></span></label><label class="check"><input type="checkbox" data-check="vatican"><span><b>梵蒂冈博物馆早场</b><small>确认 Day 3 预约时段</small></span></label><label class="check"><input type="checkbox" data-check="pantheon"><span><b>万神殿时段</b><small>确认 Day 1 入场规则</small></span></label><label class="check"><input type="checkbox" data-check="restaurants"><span><b>三家热门餐厅</b><small>Da Enzo、Osteria der Belli、Bonci</small></span></label><label class="check"><input type="checkbox" data-check="documents"><span><b>证件、申根签证与保单</b><small>保存护照复印件与保险信息</small></span></label><label class="check"><input type="checkbox" data-check="sim"><span><b>eSIM、离线地图与转换头</b><small>下载罗马离线地图</small></span></label><label class="check"><input type="checkbox" data-check="clothes"><span><b>着装与舒适鞋</b><small>梵蒂冈遮肩膝；步行鞋与防晒</small></span></label><label class="check"><input type="checkbox" data-check="safety"><span><b>安全与零钱</b><small>背包前背，准备小额欧元</small></span></label></div>
+        <div class="merged-divider"></div><div class="section-top"><div><div class="eyebrow">Bookings</div><h2>旅行预订总览</h2></div><p class="lead">按新规划显示：酒店和餐厅是“已选”，门票与交通为待确认。</p></div><div class="reservation"><div class="reservation-icon">01</div><div><h3>Leonardo Express · FCO ↔ Termini</h3><p>机场快线火车票待确认；去程安排在 Day 1 13:40，返程安排在 Day 3 17:00 后。</p></div><span class="status pending">待确认</span></div><div class="reservation"><div class="reservation-icon">02</div><div><h3>Hotel Artemide</h3><p>16.09.2026 入住，18.09.2026 退房；当前状态为已选，订单摘要待补充。</p></div><span class="status selected">已选</span></div><div class="reservation"><div class="reservation-icon">03</div><div><h3>Day 1 · Da Enzo al 29</h3><p>晚餐已选，建议提前预订。</p></div><span class="status selected">已选</span></div><div class="reservation"><div class="reservation-icon">04</div><div><h3>Day 2 · Hostaria da Nerone / Osteria der Belli</h3><p>午餐和晚餐已选，订单待补充。</p></div><span class="status selected">已选</span></div><div class="reservation"><div class="reservation-icon">05</div><div><h3>Day 3 · Bonci Pizzarium</h3><p>午餐已选，建议确认营业与排队安排。</p></div><span class="status selected">已选</span></div><div class="reservation"><div class="reservation-icon">06</div><div><h3>斗兽场、梵蒂冈与机场快线</h3><p>门票和交通均待确认后补充。</p></div><span class="status pending">待确认</span></div></section>
+
+      <section class="panel" id="notes" aria-label="注意事项">        <div class="section-top"><div><div class="eyebrow">Local Notes</div><h2>罗马出行提示</h2></div><p class="lead">以下为新规划中的实用信息；变化快的票务、交通和入境规则请出发前复核。</p></div>
+        <details open><summary>预约、门票与排队</summary><ul><li>斗兽场建议提前 2–4 周确认时段票；梵蒂冈建议预约早场。</li><li>万神殿、博尔盖塞美术馆和圣彼得穹顶的入场规则按官方页面确认。</li><li>Da Enzo al 29、Osteria der Belli 和 Bonci 属热门选择，尽早完成预订。</li></ul></details><details><summary>交通与安全</summary><ul><li>FCO 往返 Termini 使用 Leonardo Express；市内以 Metro A/B 和步行为主。</li><li>Termini、地铁 A 线、斗兽场和特雷维喷泉注意扒窃；拒绝免费红绳、签名等搭讪。</li><li>出租车绕路与景点拉客餐厅需警惕，使用有明确价格的正规服务。</li></ul></details><details><summary>支付、饮水与营业时间</summary><ul><li>多数商店可刷卡；准备零钱用于公厕、小费或街头小吃。</li><li>可自带水壶使用街头 Nasoni 饮水柱；餐厅瓶装水通常收费。</li><li>一些小店午间休息，餐厅晚市通常 19:30 后更常见。</li></ul></details><details><summary>网络、着装与紧急情况</summary><ul><li>使用 Type F/L 双圆脚插座（230V）；准备欧标转换头与 eSIM。</li><li>梵蒂冈需遮肩膝；三天步行较多，穿舒适鞋并防晒。</li><li>报警 112，急救 118；保存保单与护照复印件在手机中。</li></ul></details></section>
+
+      
+    </main>
+    <aside class="sidebar" id="sidebar"><div class="brand"><div class="brand-mark">R</div><div><b>ROMA</b><small>Travel handbook</small></div></div><nav class="nav" aria-label="手册目录"><button aria-selected="true" data-target="home">01 · 首页</button><button data-target="itinerary">02 · 行程</button><button data-target="stay">03 · 住宿 / 餐厅 / 小吃</button><button data-target="sights">04 · 景点 / 购物 / 当地体验</button><button data-target="checklist">05 · 检查清单 / 旅行预订</button><button data-target="notes">06 · 注意事项</button></nav><div class="side-note">罗马 · 3 天 2 夜<br>16.09.2026–18.09.2026</div></aside>
+  </div>
+  <script>
+    const panels = [...document.querySelectorAll('.panel')];
+    const navButtons = [...document.querySelectorAll('.nav button')];
+    const showPanel = id => { panels.forEach(p => p.classList.toggle('active', p.id === id)); navButtons.forEach(b => b.setAttribute('aria-selected', b.dataset.target === id)); document.body.classList.remove('menu-open'); window.scrollTo({top:0, behavior:'smooth'}); };
+    navButtons.forEach(button => button.addEventListener('click', () => showPanel(button.dataset.target)));
+    document.querySelectorAll('[data-go]').forEach(button => button.addEventListener('click', () => { showPanel(button.dataset.go); const sub = button.dataset.subTarget; if (sub) { const tab = document.querySelector('#' + button.dataset.go + ' [data-sub="' + sub + '"]'); if (tab) tab.click(); } }));
+    const menuButton = document.getElementById('menuButton');
+    menuButton.addEventListener('click', () => document.body.classList.toggle('menu-open'));
+    document.querySelectorAll('.day-tabs button').forEach(button => button.addEventListener('click', () => { document.querySelectorAll('.day-tabs button').forEach(b => b.classList.toggle('active', b === button)); document.querySelectorAll('.day-content').forEach(c => c.classList.toggle('active', c.dataset.content === button.dataset.day)); }));
+    document.querySelectorAll('.subtabs button').forEach(button => button.addEventListener('click', () => { const host = button.closest('.panel'); host.querySelectorAll('.subtabs button').forEach(b => b.classList.toggle('active', b === button)); host.querySelectorAll('.subcontent').forEach(c => { const active = c.dataset.subcontent === button.dataset.sub; c.classList.toggle('active', active); c.style.display = active ? 'block' : 'none'; }); }));
+    const sightCards = [...document.querySelectorAll('#sights [data-subcontent="sight-list"] .card')];
+    sightCards.filter(card => card.querySelector(':scope > a.action') && card.querySelector('.link-row')).forEach(card => { const row = card.querySelector('.link-row'); row.prepend(card.querySelector(':scope > a.action')); row.classList.add('action-grid-2x2'); });
+    const optionCard = sightCards.find(card => card.querySelector('h3')?.textContent.includes('圣天使城堡 / 博尔盖塞美术馆'));
+    if (optionCard) {
+      const row = document.createElement('div');
+      row.className = 'link-row action-grid-2x2';
+      row.style.marginTop = '13px';
+      row.innerHTML = '<a class="action" href="https://www.google.com/maps/search/?api=1&query=Castel+Sant%27Angelo" target="_blank" rel="noreferrer">Google Maps · 圣天使</a><a class="action" href="https://www.google.com/maps/search/?api=1&query=Galleria+Borghese" target="_blank" rel="noreferrer">Google Maps · 博尔盖塞</a><a class="action" href="https://www.xiaohongshu.com/search_result?keyword=Castel%20Sant%20Angelo%20Galleria%20Borghese%20Rome" target="_blank" rel="noreferrer">小红书搜索</a><button class="action" type="button">查看检查清单</button>';
+      row.querySelector('button').addEventListener('click', () => showPanel('checklist'));
+      optionCard.append(row);
+    }
+    const experienceLinks = [
+      ['特拉斯特维莱蓝调时刻', 'Trastevere+Rome'],
+      ['博尔盖塞美术馆', 'Galleria+Borghese']
+    ];
+    experienceLinks.forEach(([title, query]) => {
+      const card = [...document.querySelectorAll('#sights [data-subcontent="experience-list"] .card')].find(item => item.querySelector('h3')?.textContent.includes(title));
+      if (card) card.insertAdjacentHTML('beforeend', `<div class="link-row" style="margin-top:13px"><a class="action" href="https://www.google.com/maps/search/?api=1&query=${query}" target="_blank" rel="noreferrer">Google Maps</a></div>`);
+    });
+    const checklistItems = [
+      ['flights', 'Day 1 / Day 3 · 机票', '确认抵达与返程航班时间'],
+      ['leonardo-outbound', 'Day 1 · Leonardo Express 去程', 'FCO → Roma Termini'],
+      ['leonardo-return', 'Day 3 · Leonardo Express 返程', 'Roma Termini → FCO'],
+      ['hotel', 'Day 1 / Day 3 · Hotel Artemide 订单', '确认入住、取消政策与订单摘要'],
+      ['pantheon', 'Day 1 · 万神殿时段', '确认入场规则与可预约时段'],
+      ['da-enzo', 'Day 1 · Da Enzo al 29 晚餐', '确认晚餐预订'],
+      ['colosseum', 'Day 2 · 斗兽场联票', '确认斗兽场、罗马广场与帕拉蒂尼山的入场时段'],
+      ['nerone', 'Day 2 · Hostaria da Nerone 午餐', '确认午餐安排'],
+      ['belli', 'Day 2 · Osteria der Belli 晚餐', '确认晚餐预订'],
+      ['vatican', 'Day 3 · 梵蒂冈博物馆早场', '确认预约时段'],
+      ['st-peter', 'Day 3 · 圣彼得大教堂穹顶', '确认登顶规则、开放时间与现场排队安排'],
+      ['bonci', 'Day 3 · Bonci Pizzarium 午餐', '确认营业时间与排队安排'],
+      ['documents', '出发前 · 证件、申根签证与保单', '保存护照复印件与保险信息']
+    ];
+    const checklistGroups = [
+      ['机票 / 火车票', ['flights', 'leonardo-outbound', 'leonardo-return']],
+      ['餐厅', ['da-enzo', 'nerone', 'belli', 'bonci']],
+      ['景点', ['pantheon', 'colosseum', 'vatican', 'st-peter']],
+      ['其他', ['hotel', 'documents']]
+    ];
+    const checkGrid = document.getElementById('checkGrid');
+    checkGrid.innerHTML = checklistGroups.map(([group, keys]) => {
+      const entries = keys.map(key => checklistItems.find(item => item[0] === key));
+      return `<div class="check-category">${group}</div>${entries.map(([key, title, detail]) => `<label class="check"><input type="checkbox" data-check="${key}"><span><b>${title}</b><small>${detail}</small></span></label>`).join('')}`;
+    }).join('');
+    const appendCheckActions = (key, html) => {
+      const card = checkGrid.querySelector(`[data-check="${key}"]`)?.closest('.check');
+      if (card) card.querySelector('span').insertAdjacentHTML('beforeend', `<span class="check-actions">${html}</span>`);
+    };
+    appendCheckActions('leonardo-outbound', '<a class="action" href="https://www.trenitalia.com/en.html" target="_blank" rel="noreferrer">Trenitalia · FCO → Termini</a>');
+    appendCheckActions('leonardo-return', '<a class="action" href="https://www.trenitalia.com/en.html" target="_blank" rel="noreferrer">Trenitalia · Termini → FCO</a>');
+    appendCheckActions('hotel', '<a class="action" href="https://www.booking.com/hotel/it/artemide.en-gb.html?checkin=2026-09-16&checkout=2026-09-18&group_adults=2&no_rooms=1&group_children=0" target="_blank" rel="noreferrer">Booking · 16–18 Sep</a>');
+    appendCheckActions('pantheon', '<a class="action" href="https://portale.museiitaliani.it/b2c/buyTicketless/33f77159-0acd-40c4-8524-701f33aae108" target="_blank" rel="noreferrer">官网购票</a>');
+    appendCheckActions('colosseum', '<a class="action" href="https://ticketing.colosseo.it/en/" target="_blank" rel="noreferrer">官网购票</a>');
+    appendCheckActions('vatican', '<a class="action" href="https://tickets.museivaticani.va/home/calendar/visit/Biglietti-Musei" target="_blank" rel="noreferrer">官网购票</a>');
+    appendCheckActions('st-peter', '<a class="action" href="https://booking.basilicasanpietro.va/en/" target="_blank" rel="noreferrer">官网购票</a>');
+    appendCheckActions('da-enzo', '<a class="action" href="tel:+39065812260">致电咨询 · +39 06 5812260</a>');
+    appendCheckActions('nerone', '<a class="action" href="tel:+39064817952">电话 · +39 06 4817952</a>');
+    appendCheckActions('belli', '<a class="action" href="tel:+39065803782">电话 · +39 06 5803782</a>');
+    appendCheckActions('bonci', '<a class="action" href="tel:+390639745416">电话 · +39 06 39745416</a>');
+    const timeOptions = (start, end) => {
+      const times = []; for (let hour = start; hour <= end; hour += 1) { times.push(`${String(hour).padStart(2, '0')}:00`); if (hour < end) times.push(`${String(hour).padStart(2, '0')}:30`); }
+      return times.map(time => `<option value="${time}">${time}</option>`).join('');
+    };
+    const addTimePicker = (key, label, start, end) => appendCheckActions(key, `<select aria-label="${label}"><option value="">${label}</option>${timeOptions(start, end)}</select>`);
+    addTimePicker('da-enzo', '预计到店时间', 19, 23);
+    addTimePicker('nerone', '选择午餐时段', 12, 15);
+    addTimePicker('belli', '选择晚餐时段', 19, 23);
+    addTimePicker('bonci', '选择午餐时段', 12, 15);
+    document.querySelector('#checklist .eyebrow').textContent = 'Checklist';
+    document.querySelector('#checklist h2').textContent = '出发前检查清单';
+    const bookingDivider = document.querySelector('#checklist .merged-divider');
+    if (bookingDivider) { let item = bookingDivider; while (item) { const next = item.nextElementSibling; item.remove(); item = next; } }
+    const checks = [...document.querySelectorAll('[data-check]')]; const storeKey = 'rome-handbook-checks';
+    const savedChecks = JSON.parse(localStorage.getItem(storeKey) || '{}'); checks.forEach(c => c.checked = !!savedChecks[c.dataset.check]);
+    const updateChecks = () => { const state = Object.fromEntries(checks.map(c => [c.dataset.check, c.checked])); localStorage.setItem(storeKey, JSON.stringify(state)); const count = checks.filter(c => c.checked).length; document.getElementById('checkText').textContent = `已完成 ${count} / ${checks.length} 项`; document.getElementById('checkBar').style.width = `${count / checks.length * 100}%`; };
+    checks.forEach(c => c.addEventListener('change', updateChecks)); updateChecks();
+  </script>
+</body>
+</html>
